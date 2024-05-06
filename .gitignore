@@ -1,0 +1,36 @@
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# IntelliJ IDEA project files
+.idea/
+
+# Maven build directory
+target/
+
+# Local configuration file
+*.iml
+
+# Dependency directories
+out/
+
+# Temporary files
+*.tmp
+
+# macOS system files
+.DS_Store
+
+# JUnit test result files
+TEST-*.xml
+
+# User-specific files
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/shelf
+
+# Operating System-specific files
+.idea/.name
+Thumbs.db
