@@ -2,7 +2,7 @@ name: PollQuest Workflow
 'on':
   push:
     branches:
-      - main
+      - master
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
