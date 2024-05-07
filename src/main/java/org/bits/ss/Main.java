@@ -2,6 +2,7 @@ package org.bits.ss;
 
 import com.sun.net.httpserver.HttpServer;
 import org.bits.ss.handlers.RestHandler;
+import org.bits.ss.service.PGService;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -13,9 +14,15 @@ public class Main {
     public static final int PORT = 8008;
     static HttpServer server;
 
+    private static PGService pgService;
+
     public static void main(String[] args) throws IOException {
         startServer(PORT);
-
+        pgService = new PGService();
+        pgService.initDataSource();
+        logger.info("isDBConnected" + pgService.isDBConnected());
+        pgService.initFlyway();
+        Runtime.getRuntime().addShutdownHook(new Thread(Main::stopServer));
     }
 
     public static void startServer(int port) throws IOException {
@@ -23,7 +30,6 @@ public class Main {
         server.createContext("/" + APP_NAME + "/", new RestHandler());
         server.start();
         logger.info(String.format("Server started at : http://localhost:%d/%s", port, APP_NAME));
-        Runtime.getRuntime().addShutdownHook(new Thread(Main::stopServer));
     }
 
     public static void stopServer(){
