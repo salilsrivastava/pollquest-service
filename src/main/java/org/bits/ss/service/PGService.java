@@ -13,15 +13,16 @@ import java.sql.ResultSet;
 import java.util.logging.Logger;
 
 public class PGService {
-    private static final Logger logger = Logger.getLogger(Main.class.getName());
+    private static final Logger logger = Logger.getLogger(PGService.class.getName());
     private final HikariConfig hikariConfig = new HikariConfig();
     private HikariDataSource hikariDataSource;
     private final int dbPort = 54321;
-    private final String dbhostName = "localhost";
+    private final String dbhostName = "172.25.48.1";
     private final String database = "postgres";
     private final String jdbcUrl = "jdbc:postgresql://" + dbhostName + ":" + dbPort + "/" + database;
 
     public void initFlyway(){
+        logger.info("Flyway initializing...");
         var flyway = Flyway.configure()
                 .locations("flywayScripts")
                 .validateOnMigrate(false)
@@ -41,12 +42,13 @@ public class PGService {
         logger.info("Connected to DB");
     }
 
-    private DataSource getDataSource(){
+    public DataSource getDataSource(){
         return hikariDataSource;
     }
 
 
     public boolean isDBConnected(){
+        logger.info("Checking if database is connected...");
         final DataSource ds = getDataSource();
         try(Connection connection = ds.getConnection();
             PreparedStatement ps = connection.prepareStatement("""
